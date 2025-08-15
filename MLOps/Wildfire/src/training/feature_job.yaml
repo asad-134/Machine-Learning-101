@@ -1,0 +1,3 @@
+command: python compute_features.py --date ${{inputs.date}}
+environment: azureml:geo-env:1
+compute: azureml:cpu-cluster
