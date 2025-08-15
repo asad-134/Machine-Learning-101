@@ -1,0 +1,4 @@
+registry: wasbs://feast-registry@wildfiredata<you>.blob.core.windows.net/registry.db
+offline_store:
+  type: file
+  path: wasbs://feast-offline@wildfiredata<you>.blob.core.windows.net
