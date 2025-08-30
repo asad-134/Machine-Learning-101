@@ -49,7 +49,7 @@
 				"typeProperties": {
 					"variableName": "manifestPath",
 					"value": {
-						"value": "@if(\n  equals(json(activity('Download_Satellite_Image').output.Response).status, 'success'),\n  json(activity('Download_Satellite_Image').output.Response).manifest_path,\n  'no_images_found'\n)",
+						"value": "@activity('Download_Satellite_Image').output.manifest_path",
 						"type": "Expression"
 					}
 				}
