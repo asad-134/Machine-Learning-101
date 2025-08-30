@@ -1,0 +1,24 @@
+{
+	"name": "Daily_8AM_Trigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Daily_Satellite_Download",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2025-08-30T15:18:00",
+				"timeZone": "Pakistan Standard Time"
+			}
+		}
+	}
+}
