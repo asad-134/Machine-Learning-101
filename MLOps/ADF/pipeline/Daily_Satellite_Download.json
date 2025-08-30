@@ -1,0 +1,89 @@
+{
+	"name": "Daily_Satellite_Download",
+	"properties": {
+		"activities": [
+			{
+				"name": "Download_Satellite_Image",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"url": {
+						"value": "@concat('https://wildfire-function-app.orangemoss-70554d66.southeastasia.azurecontainerapps.io/api/download_scene')",
+						"type": "Expression"
+					},
+					"body": {
+						"area_of_interest": {
+							"type": "Polygon",
+							"coordinates": [
+								[
+									[
+										-122.5,
+										47.5
+									],
+									[
+										-121.5,
+										47.5
+									],
+									[
+										-121.5,
+										48.5
+									],
+									[
+										-122.5,
+										48.5
+									],
+									[
+										-122.5,
+										47.5
+									]
+								]
+							]
+						},
+						"date": "@{formatDateTime(utcnow(), 'yyyy-MM-dd')}",
+						"max_cloud_cover": 20
+					}
+				}
+			},
+			{
+				"name": "Store_Manifest_Path",
+				"description": "",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Download_Satellite_Image",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "manifestPath",
+					"value": "@activity('Download_Satellite_Image').output.manifest_path"
+				}
+			}
+		],
+		"variables": {
+			"manifestPath": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
