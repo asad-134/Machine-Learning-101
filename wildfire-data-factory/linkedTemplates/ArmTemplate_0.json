@@ -29,7 +29,7 @@
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 3,
-							"retryIntervalInSeconds": 30,
+							"retryIntervalInSeconds": 60,
 							"secureOutput": false,
 							"secureInput": false
 						},
@@ -151,8 +151,7 @@
 						"frequency": "Day",
 						"interval": 1,
 						"startTime": "2025-08-30T15:18:00",
-						"timeZone": "Pakistan Standard Time",
-						"schedule": {}
+						"timeZone": "Pakistan Standard Time"
 					}
 				}
 			},
