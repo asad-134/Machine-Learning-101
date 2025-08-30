@@ -108,7 +108,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Started",
+				"runtimeState": "Stopped",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -124,7 +124,8 @@
 						"frequency": "Day",
 						"interval": 1,
 						"startTime": "2025-08-30T15:18:00",
-						"timeZone": "Pakistan Standard Time"
+						"timeZone": "Pakistan Standard Time",
+						"schedule": {}
 					}
 				}
 			},
