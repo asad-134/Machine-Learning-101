@@ -1,0 +1,9 @@
+{
+	"name": "wildfire-data-factory",
+	"location": "southeastasia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "93f0330e-7f8e-4fd3-8d25-2666949458a0",
+		"tenantId": "d9d5a1c4-126b-46a1-bf2f-da41c03a036b"
+	}
+}
