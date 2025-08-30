@@ -9,7 +9,7 @@
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 3,
-					"retryIntervalInSeconds": 30,
+					"retryIntervalInSeconds": 60,
 					"secureOutput": false,
 					"secureInput": false
 				},
@@ -75,7 +75,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "manifestPath",
-					"value": "@activity('Download_Satellite_Image').output.manifest_path"
+					"value": {
+						"value": "@activity('Download_Satellite_Image').output.manifest_path",
+						"type": "Expression"
+					}
 				}
 			}
 		],
