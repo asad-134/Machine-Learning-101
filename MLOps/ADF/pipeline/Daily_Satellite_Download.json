@@ -24,7 +24,7 @@
 						"type": "Expression"
 					},
 					"body": {
-						"value": "{\n  \"area_of_interest\": {\n    \"type\": \"Polygon\",\n    \"coordinates\": [[\n      [-122.34, 47.60],\n      [-122.33, 47.60],\n      [-122.33, 47.61],\n      [-122.34, 47.61],\n      [-122.34, 47.60]\n    ]]\n  },\n  \"date\": \"2025-08-20/2025-08-30\"\n  \"max_cloud_cover\": 50\n}",
+						"value": "{\n  \"area_of_interest\": {\n    \"type\": \"Polygon\",\n    \"coordinates\": [[\n      [-122.34, 47.60],\n      [-122.33, 47.60],\n      [-122.33, 47.61],\n      [-122.34, 47.61],\n      [-122.34, 47.60]\n    ]]\n  },\n  \"date\": \"@{formatDateTime(utcNow(), 'yyyy-MM-dd')}/@{formatDateTime(utcNow(), 'yyyy-MM-dd')}\",\n  \"max_cloud_cover\": 50\n}",
 						"type": "Expression"
 					}
 				}
