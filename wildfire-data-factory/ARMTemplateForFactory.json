@@ -1,0 +1,133 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "wildfire-data-factory"
+		},
+		"Wildfire_Function_Endpoint_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://wildfire-function-app.orangemoss-70554d66.southeastasia.azurecontainerapps.io"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Daily_Satellite_Download')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Download_Satellite_Image",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"url": {
+								"value": "@concat('https://wildfire-function-app.orangemoss-70554d66.southeastasia.azurecontainerapps.io/api/download_scene')",
+								"type": "Expression"
+							},
+							"body": {
+								"area_of_interest": {
+									"type": "Polygon",
+									"coordinates": [
+										[
+											[
+												-122.5,
+												47.5
+											],
+											[
+												-121.5,
+												47.5
+											],
+											[
+												-121.5,
+												48.5
+											],
+											[
+												-122.5,
+												48.5
+											],
+											[
+												-122.5,
+												47.5
+											]
+										]
+									]
+								},
+								"date": "@{formatDateTime(utcnow(), 'yyyy-MM-dd')}",
+								"max_cloud_cover": 20
+							}
+						}
+					},
+					{
+						"name": "Store_Manifest_Path",
+						"description": "",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Download_Satellite_Image",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "manifestPath",
+							"value": {
+								"value": "@activity('Download_Satellite_Image').output.manifest_path",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"manifestPath": {
+						"type": "String"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Wildfire_Function_Endpoint')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "HttpServer",
+				"typeProperties": {
+					"url": "[parameters('Wildfire_Function_Endpoint_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

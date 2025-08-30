@@ -1,0 +1,12 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "wildfire-data-factory"
+		},
+		"Wildfire_Function_Endpoint_properties_typeProperties_url": {
+			"value": "https://wildfire-function-app.orangemoss-70554d66.southeastasia.azurecontainerapps.io"
+		}
+	}
+}
