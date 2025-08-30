@@ -1,0 +1,12 @@
+{
+	"name": "Wildfire_Function_Endpoint",
+	"properties": {
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://wildfire-function-app.orangemoss-70554d66.southeastasia.azurecontainerapps.io",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}
