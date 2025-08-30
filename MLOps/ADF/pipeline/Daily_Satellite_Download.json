@@ -24,35 +24,8 @@
 						"type": "Expression"
 					},
 					"body": {
-						"area_of_interest": {
-							"type": "Polygon",
-							"coordinates": [
-								[
-									[
-										-122.5,
-										47.5
-									],
-									[
-										-121.5,
-										47.5
-									],
-									[
-										-121.5,
-										48.5
-									],
-									[
-										-122.5,
-										48.5
-									],
-									[
-										-122.5,
-										47.5
-									]
-								]
-							]
-						},
-						"date": "@{formatDateTime(utcnow(), 'yyyy-MM-dd')}",
-						"max_cloud_cover": 20
+						"value": "{\n  \"area_of_interest\": {\n    \"type\": \"Polygon\",\n    \"coordinates\": [[\n      [-122.34, 47.60],\n      [-122.33, 47.60],\n      [-122.33, 47.61],\n      [-122.34, 47.61],\n      [-122.34, 47.60]\n    ]]\n  },\n  \"date\": \"2025-08-20/2025-08-30\"\n  \"max_cloud_cover\": 50\n}",
+						"type": "Expression"
 					}
 				}
 			},
@@ -76,7 +49,7 @@
 				"typeProperties": {
 					"variableName": "manifestPath",
 					"value": {
-						"value": "@activity('Download_Satellite_Image').output.manifest_path",
+						"value": "@if(\n  equals(activity('Download_Satellite_Image').output.Response.status, 'success'),\n  activity('Download_Satellite_Image').output.Response.manifest_path,\n  'no_images_found'\n)",
 						"type": "Expression"
 					}
 				}
