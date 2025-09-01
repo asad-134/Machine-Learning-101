@@ -17,6 +17,219 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Australia_Wildfire_Data')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Download_Satellite_Image",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 60,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"url": {
+								"value": "@concat('https://wildfire-function-app.orangemoss-70554d66.southeastasia.azurecontainerapps.io/api/download_scene')",
+								"type": "Expression"
+							},
+							"body": {
+								"value": "{\n  \"area_of_interest\": {\n    \"type\": \"Polygon\",\n    \"coordinates\": [[[150.0,-35.0],[150.5,-35.0],[150.5,-34.5],[150.0,-34.5],[150.0,-35.0]]]\n  },\n  \"date\": \"2020-01-01/2023-12-31\",\n  \"max_cloud_cover\": 50\n}",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Store_Manifest_Path",
+						"description": "",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Download_Satellite_Image",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "manifestPath",
+							"value": {
+								"value": "@if(\n  equals(json(activity('Download_Satellite_Image').output.Response).status, 'success'),\n  concat('raw/satellite/australia/', json(activity('Download_Satellite_Image').output.Response).manifest_path),\n  'no_images_found'\n)",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"manifestPath": {
+						"type": "String"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/California_Wildfire_Data')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Download_Satellite_Image",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 60,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"url": {
+								"value": "@concat('https://wildfire-function-app.orangemoss-70554d66.southeastasia.azurecontainerapps.io/api/download_scene')",
+								"type": "Expression"
+							},
+							"body": {
+								"value": "{\n  \"area_of_interest\": {\n    \"type\": \"Polygon\",\n    \"coordinates\": [[\n      [-121.5, 36.8],\n      [-121.0, 36.8],\n      [-121.0, 37.2],\n      [-121.5, 37.2],\n      [-121.5, 36.8]\n    ]]\n  },\n  \"date\": \"2020-01-01/2023-12-31\",\n  \"max_cloud_cover\": 50\n}",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Store_Manifest_Path",
+						"description": "",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Download_Satellite_Image",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "manifestPath",
+							"value": {
+								"value": "@if(\n  equals(json(activity('Download_Satellite_Image').output.Response).status, 'success'),\n  concat('raw/satellite/california/', json(activity('Download_Satellite_Image').output.Response).manifest_path),\n  'no_images_found'\n)",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"manifestPath": {
+						"type": "String"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Canada_Wildfire_Data')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Download_Satellite_Image",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 60,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"url": {
+								"value": "@concat('https://wildfire-function-app.orangemoss-70554d66.southeastasia.azurecontainerapps.io/api/download_scene')",
+								"type": "Expression"
+							},
+							"body": {
+								"value": "{\n  \"area_of_interest\": {\n    \"type\": \"Polygon\",\n    \"coordinates\": [[[-121.0,50.0],[-120.0,50.0],[-120.0,51.0],[-121.0,51.0],[-121.0,50.0]]]\n  },\n  \"date\": \"2020-01-01/2023-12-31\",\n  \"max_cloud_cover\": 50\n}",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Store_Manifest_Path",
+						"description": "",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Download_Satellite_Image",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "manifestPath",
+							"value": {
+								"value": "@if(\n  equals(json(activity('Download_Satellite_Image').output.Response).status, 'success'),\n  concat('raw/satellite/canada/', json(activity('Download_Satellite_Image').output.Response).manifest_path),\n  'no_images_found'\n)",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"manifestPath": {
+						"type": "String"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Daily_Satellite_Download')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -124,8 +337,7 @@
 						"frequency": "Day",
 						"interval": 1,
 						"startTime": "2025-08-30T15:18:00",
-						"timeZone": "Pakistan Standard Time",
-						"schedule": {}
+						"timeZone": "Pakistan Standard Time"
 					}
 				}
 			},
