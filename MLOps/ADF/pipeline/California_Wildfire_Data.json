@@ -1,0 +1,65 @@
+{
+	"name": "California_Wildfire_Data",
+	"properties": {
+		"activities": [
+			{
+				"name": "Download_Satellite_Image",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 60,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"url": {
+						"value": "@concat('https://wildfire-function-app.orangemoss-70554d66.southeastasia.azurecontainerapps.io/api/download_scene')",
+						"type": "Expression"
+					},
+					"body": {
+						"value": "{\n  \"area_of_interest\": {\n    \"type\": \"Polygon\",\n    \"coordinates\": [[\n      [-121.5, 36.8],\n      [-121.0, 36.8],\n      [-121.0, 37.2],\n      [-121.5, 37.2],\n      [-121.5, 36.8]\n    ]]\n  },\n  \"date\": \"2020-01-01/2023-12-31\",\n  \"max_cloud_cover\": 50\n}",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Store_Manifest_Path",
+				"description": "",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Download_Satellite_Image",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "manifestPath",
+					"value": {
+						"value": "@if(\n  equals(json(activity('Download_Satellite_Image').output.Response).status, 'success'),\n  concat('raw/satellite/california/', json(activity('Download_Satellite_Image').output.Response).manifest_path),\n  'no_images_found'\n)",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"manifestPath": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
