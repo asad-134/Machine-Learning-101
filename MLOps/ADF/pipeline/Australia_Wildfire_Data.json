@@ -37,7 +37,7 @@
 					{
 						"activity": "Download_Satellite_Image",
 						"dependencyConditions": [
-							"Completed"
+							"Succeeded"
 						]
 					}
 				],
