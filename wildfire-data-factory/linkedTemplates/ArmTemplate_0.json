@@ -57,7 +57,7 @@
 							{
 								"activity": "Download_Satellite_Image",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
 								]
 							}
 						],
@@ -128,7 +128,7 @@
 							{
 								"activity": "Download_Satellite_Image",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
 								]
 							}
 						],
@@ -199,7 +199,7 @@
 							{
 								"activity": "Download_Satellite_Image",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
 								]
 							}
 						],
@@ -316,16 +316,85 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Daily_8AM_Trigger')]",
+			"name": "[concat(parameters('factoryName'), '/Master_Wildfire_Data_Collection')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Execute_California",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "California_Wildfire_Data",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": false,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Execute_Australia",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Australia_Wildfire_Data",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": false,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Execute_Canada",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Canada_Wildfire_Data",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": false,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/California_Wildfire_Data')]",
+				"[concat(variables('factoryId'), '/pipelines/Australia_Wildfire_Data')]",
+				"[concat(variables('factoryId'), '/pipelines/Canada_Wildfire_Data')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Hourly_Master_Run')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
-							"referenceName": "Daily_Satellite_Download",
+							"referenceName": "Master_Wildfire_Data_Collection",
 							"type": "PipelineReference"
 						},
 						"parameters": {}
@@ -334,15 +403,16 @@
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
-						"frequency": "Day",
+						"frequency": "Hour",
 						"interval": 1,
-						"startTime": "2025-08-30T15:18:00",
+						"startTime": "2025-09-04T20:05:00",
+						"endTime": "2025-09-12T20:05:00",
 						"timeZone": "Pakistan Standard Time"
 					}
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Daily_Satellite_Download')]"
+				"[concat(variables('factoryId'), '/pipelines/Master_Wildfire_Data_Collection')]"
 			]
 		}
 	]
