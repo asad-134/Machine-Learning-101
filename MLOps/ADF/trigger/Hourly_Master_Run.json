@@ -1,0 +1,18 @@
+{
+	"name": "Hourly_Master_Run",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 1,
+				"startTime": "2025-09-04T20:05:00",
+				"endTime": "2025-09-12T20:05:00",
+				"timeZone": "Pakistan Standard Time"
+			}
+		}
+	}
+}
