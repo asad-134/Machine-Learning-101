@@ -2,7 +2,7 @@
 	"name": "Hourly_Master_Run",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Started",
+		"runtimeState": "Stopped",
 		"pipelines": [
 			{
 				"pipelineReference": {
