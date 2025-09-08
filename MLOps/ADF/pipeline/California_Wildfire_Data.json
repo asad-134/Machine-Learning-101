@@ -24,7 +24,7 @@
 						"type": "Expression"
 					},
 					"body": {
-						"value": "{\n  \"area_of_interest\": {\n    \"type\": \"Polygon\",\n    \"coordinates\": [[\n      [-121.5, 36.8],\n      [-121.0, 36.8],\n      [-121.0, 37.2],\n      [-121.5, 37.2],\n      [-121.5, 36.8]\n    ]]\n  },\n  \"date\": \"2020-01-01/2023-12-31\",\n  \"max_cloud_cover\": 50\n}",
+						"value": "{\n  \"area_of_interest\": {\n    \"type\": \"Polygon\",\n    \"coordinates\": [\n      [\n        [-124.0, 36.5],\n        [-119.0, 36.5],\n        [-119.0, 40.5],\n        [-124.0, 40.5],\n        [-124.0, 36.5]\n      ]\n    ]\n  },\n  \"date\": \"2020-06-01/2023-11-30\",\n  \"max_cloud_cover\": 10,\n  \"region\": \"california\",\n  \"limit\": 50\n}",
 						"type": "Expression"
 					}
 				}

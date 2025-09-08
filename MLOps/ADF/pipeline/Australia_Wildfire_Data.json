@@ -24,7 +24,7 @@
 						"type": "Expression"
 					},
 					"body": {
-						"value": "{\n  \"area_of_interest\": {\n    \"type\": \"Polygon\",\n    \"coordinates\": [[[150.0,-35.0],[150.5,-35.0],[150.5,-34.5],[150.0,-34.5],[150.0,-35.0]]]\n  },\n  \"date\": \"2020-01-01/2023-12-31\",\n  \"max_cloud_cover\": 50\n}",
+						"value": "{\n  \"area_of_interest\": {\n    \"type\": \"Polygon\",\n    \"coordinates\": [\n      [\n        [146.0, -38.0],\n        [150.0, -38.0],\n        [150.0, -34.0],\n        [146.0, -34.0],\n        [146.0, -38.0]\n      ]\n    ]\n  },\n  \"date\": \"2019-12-01/2023-03-31\",\n  \"max_cloud_cover\": 15,\n  \"region\": \"australia\",\n  \"limit\": 50\n}",
 						"type": "Expression"
 					}
 				}

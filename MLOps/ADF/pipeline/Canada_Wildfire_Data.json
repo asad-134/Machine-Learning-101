@@ -24,7 +24,7 @@
 						"type": "Expression"
 					},
 					"body": {
-						"value": "{\n  \"area_of_interest\": {\n    \"type\": \"Polygon\",\n    \"coordinates\": [[[-121.0,50.0],[-120.0,50.0],[-120.0,51.0],[-121.0,51.0],[-121.0,50.0]]]\n  },\n  \"date\": \"2020-01-01/2023-12-31\",\n  \"max_cloud_cover\": 50\n}",
+						"value": "{\n  \"area_of_interest\": {\n    \"type\": \"Polygon\",\n    \"coordinates\": [\n      [\n        [-120.0, 51.0],\n        [-110.0, 51.0],\n        [-110.0, 60.0],\n        [-120.0, 60.0],\n        [-120.0, 51.0]\n      ]\n    ]\n  },\n  \"date\": \"2020-05-01/2023-09-30\",\n  \"max_cloud_cover\": 20,\n  \"region\": \"canada\",\n  \"limit\": 50\n}",
 						"type": "Expression"
 					}
 				}
