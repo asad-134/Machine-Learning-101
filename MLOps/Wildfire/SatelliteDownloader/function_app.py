@@ -5,8 +5,8 @@ from pystac_client import Client
 from azure.storage.blob import BlobServiceClient
 import json
 import os
-import time
-
+import time  # Added for timing
+from datetime import datetime
 app = func.FunctionApp()
 
 @app.route(route="download_scene", auth_level=func.AuthLevel.ANONYMOUS, methods=["POST"])
@@ -32,6 +32,7 @@ def download_scene(req: func.HttpRequest) -> func.HttpResponse:
         area_of_interest = req_body.get('area_of_interest')
         date = req_body.get('date')
         max_cloud_cover = req_body.get('max_cloud_cover', 10)
+        region = req_body.get('region', 'manifests')
         json_time = time.time() - json_start
         logging.info(f"JSON parsing completed in {json_time:.2f} seconds")
         logging.info(f"Parameters - Area: {area_of_interest}, Date: {date}, Max clouds: {max_cloud_cover}%")
@@ -104,7 +105,8 @@ def download_scene(req: func.HttpRequest) -> func.HttpResponse:
     # 6. UPLOAD TO BLOB STORAGE
     try:
         upload_start = time.time()
-        blob_name = f"raw/satellite/manifests/{best_item.id}_manifest.json"
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        blob_name = f"raw/satellite/{region}/{best_item.id}_{timestamp}_manifest.json"
         blob_client = blob_service_client.get_blob_client(container="wildfire-data", blob=blob_name)
         blob_client.upload_blob(json.dumps(manifest), overwrite=True)
         upload_time = time.time() - upload_start
